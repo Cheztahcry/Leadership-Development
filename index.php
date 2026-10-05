@@ -3,8 +3,7 @@ require_once __DIR__ . '/index_handler.php';
 include_once __DIR__ . '/students_info_class.php';
 $index_handler = new Index();
 $users_inst = $index_handler -> ini_index();
-$users_id = $users_inst['id'];
-$users_cokkies = $users_inst['cookie'];
+
 $student_info = new StudentInfo();
 $students = $student_info->show_students();
 
@@ -26,7 +25,15 @@ $students = $student_info->show_students();
         <a href="index.php" class="brand-title">SOLWIN</a>
     </div>
     <div class="header-links">
-        <?php if($user_id):?>
+        <?php if($users_inst):?>
+            <a href="owner_dashboard.php" class="user_greet">
+                <?php if(!empty($user->picture)): ?>
+                    <img src="assets/img/uploads/<?= htmlspecialchars($users_inst->picture) ?>" alt="Profile" class="user-avatar" style="width:30px;height:30px;border-radius:50%;object-fit:cover;">
+                <?php else: ?>
+                    <span class="user-icon" aria-hidden="true">👤</span>
+                <?php endif; ?>
+                <span>Hello, <?= htmlspecialchars($users_inst->first_name) ?>!</span>
+            </a>
             
             <div class="action-group">
                 <a href="student_info.php" class="signin-btn">Add a Student</a>
@@ -97,8 +104,9 @@ $students = $student_info->show_students();
                     <td><?= htmlspecialchars($row->gender) ?></td>
                     <td><?= htmlspecialchars($row->netlead_fname . ' ' . $row->netlead_lname) ?></td>
                     <td class="action-cell">
-                        <button type="button" class="action-btn inquire-btn">More Info</button>
-                        
+                        <form action="student_dashboard.php" method="POST">
+                        <button type="submit" name ="uid" class="action-btn inquire-btn" value = "<?= htmlspecialchars($row->uid) ?>">More Info</button>
+                        </form>
                     </td>
                 </tr>
                 <?php endforeach; ?>

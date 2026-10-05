@@ -43,10 +43,10 @@
             echo "Error inserting records: " . $e->getMessage();
         }
         }
-        public function show_studentinfo($id) {
-            $sql = "SELECT * FROM `$this->query_config['tables']['students']` WHERE id = ?";
+        public function show_studentinfo($uid) {
+            $sql = "SELECT * FROM `{$this->query_config['tables']['students']}` WHERE uid = ? LIMIT 1";
             $stmt = $this->pdo->prepare($sql);          
-            $stmt->execute([$id]);
+            $stmt->execute([$uid]);
             $user = $stmt->fetch(PDO::FETCH_OBJ);
             return $user;
         }

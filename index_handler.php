@@ -1,20 +1,23 @@
 <?php
-include_once __DIR__ .  '/owner_info_class.php';
+include_once __DIR__ .  '/ld_head_info_class.php';
 include_once __DIR__ . '/login_class.php';
+session_start();
 class Index{
     private function user_cookies(){
-        if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_token'])) {
+        if (!isset($_SESSION['account_id']) && isset($_COOKIE['remember_token'])) {
         $cookie_token = $_COOKIE['remember_token'];
+        $cookie_parts = explode(':', $cookie_token);
+        list($selector, $validator) = $cookie_parts;
         $account = new AccountInfo();
-        $cookies = $account->fetch_token();
+        $cookies = $account->fetch_token($selector, $validator);
         return $cookies;
     }   
     }
 
     private function user_id(){
-        if(isset($_SESSION["user_id"])){
+        if(isset($_SESSION["account_id"])){
             $owner = new OwnerInfo();
-            $user = $owner->show_ownerinfo($_SESSION["user_id"]);
+            $user = $owner->show_ownerinfo($_SESSION["account_id"]);
             return $user;
         }
     }
@@ -23,21 +26,16 @@ class Index{
         $ini_cookie = null;
         $ini_id = null;
         
-        session_start();
+        
         try {
             $ini_cookie = $this->user_cookies();
             $ini_id = $this->user_id();
         }catch (PDOException $e) {
             echo "Database error: " . $e->getMessage();
         }
-        return [
-            'cookie' => $ini_cookie,
-            'id' => $ini_id
-        ];
+        return $ini_id;
 
     }
 
 }
-
-
 ?>

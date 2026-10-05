@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_SESSION['user_id'])) {
+if (isset($_SESSION['account_id'])) {
    require_once __DIR__ . '/login_class.php';
    $account = new AccountInfo();
    $account->delete_token();

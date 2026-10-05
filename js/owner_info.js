@@ -1,27 +1,5 @@
-const middle_name = document.getElementById("mname")
-const age = document.getElementById("age")
 const password = document.getElementById("password")
 const confirm_password = document.getElementById("confirm-password")
-
-document.getElementById("check_mname").addEventListener("change", function () {
-    if (middle_name.disabled == true){
-       middle_name.disabled = false
-       middle_name.style.backgroundColor = "#ffffff"
-    }
-    else if (middle_name.disabled == false){
-       middle_name.disabled = true
-       middle_name.style.backgroundColor = "#cccccc"
-    }
-
-})
-
-document.getElementById("clear").addEventListener("click", function() {
-    document.getElementById("owner-enrollment").reset();
-    middle_name.disabled = false;
-    middle_name.style.backgroundColor = "#ffffff"
-    clearValidationMessages();
-});
-
 // ====== EMAIL AND PASSWORD VALIDATION ======
 
 // Email validation function
@@ -79,20 +57,11 @@ function clearValidationError(fieldId) {
     field.style.borderColor = "";
 }
 
-// Age validation function
-function validateAge(age) {
-    const ageNum = parseInt(age);
-    if (isNaN(ageNum) || ageNum < 18) {
-        return false;
-    }
-    return true;
-}
 
 // Clear all validation messages
 function clearValidationMessages() {
     clearValidationError("username");
     clearValidationError("password");
-    clearValidationError("age");
 }
 
 // Email field validation on blur
@@ -158,36 +127,11 @@ confirm_password.addEventListener("input", function() {
     }
 });
 
-// Age field validation on blur
-age.addEventListener("blur", function() {
-    const age = this.value.trim();
-    
-    if (age === "") {
-        clearValidationError("age");
-        return;
-    }
-    
-    if (!validateAge(age)) {
-        showValidationError("age", "You can't register if your age is below 18 years old");
-    } else {
-        clearValidationError("age");
-    }
-});
-
-// Age field validation on input (real-time)
-age.addEventListener("input", function() {
-    if (this.value.trim() !== "" && !validateAge(this.value.trim())) {
-        this.style.borderColor = "#ffcccc";
-    } else {
-        this.style.borderColor = "";
-    }
-});
 
 // Submitting without input validation
 document.getElementById("owner-enrollment").addEventListener("submit", function(e) {
     const email = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value;
-    const age = document.getElementById("age").value.trim();
     
     let isValid = true;
     
@@ -217,21 +161,6 @@ document.getElementById("owner-enrollment").addEventListener("submit", function(
         } else {
             clearValidationError("password");
         }
-    }
-    
-    // Validate age
-    if (age === "") {
-        showValidationError("age", "Age is required");
-        isValid = false;
-    } else if (!validateAge(age)) {
-        showValidationError("age", "you can't register if your age is below 18 years old");
-        isValid = false;
-    } else {
-        clearValidationError("age");
-    }
-    
-    if (!isValid) {
-        e.preventDefault();
     }
 });
 

@@ -35,7 +35,7 @@ $_SESSION['LAST_ACTIVITY'] = time();
                 <div class="field-group">
                     <label for="email">Email</label>
                     <div class="field-row">
-                        <input type="text" name="email" id="email" placeholder="Email">
+                        <input type="email" name="email" id="email" placeholder="Email">
                     </div>
                 </div>
                 <div class="field-group">

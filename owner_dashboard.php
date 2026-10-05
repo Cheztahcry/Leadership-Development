@@ -1,10 +1,6 @@
 <?php
 session_start();
 $user = false;
-$acc_rent = false;
-$acc_sale = false;
-$acc_book = false;
-// Handle profile picture upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['owner_picture'])) {
     if (!isset($_SESSION['user_id'])) {
         header('Location: login.php');
@@ -30,18 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['owner_picture'])) {
 
 if(isset($_SESSION["user_id"])){
     include_once __DIR__ . '/owner_info_class.php';
-    include_once __DIR__ .  '/rent_info_class.php';
-    include_once __DIR__ .  '/sale_info_class.php';
-    include_once __DIR__ .  '/bookmark.php';
     $owner = new OwnerInfo();
-    $rent = new RentInfo();
-    $sale = new SaleInfo();
-    $book = new Bookmark();
     try{
         $user = $owner->show_ownerinfo($_SESSION["user_id"]);
-        $acc_rent = $rent->innerjoin_table_dashboard($_SESSION["user_id"]);
-        $acc_sale = $sale->innerjoin_table_dashboard($_SESSION["user_id"]);
-        $acc_book = $book->show_bookmark($_SESSION["user_id"]);
     }catch (PDOException $e) {
         echo "Can't find the user data";
     } 
@@ -73,37 +60,11 @@ if(isset($_SESSION["user_id"])){
             </div>
 
             <h1>Account Dashboard</h1>
-
-                <?php if($user): ?>
-                <div class="profile-upload" style="display:flex;align-items:center;gap:16px;margin-bottom:18px;">
-                    <div class="profile-preview">
-                        <?php if(!empty($user->picture)): ?>
-                            <img src="assets/img/uploads/<?= htmlspecialchars($user->picture) ?>" alt="Profile" class="profile-avatar" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 6px 18px rgba(0,0,0,0.12);">
-                        <?php else: ?>
-                            <div class="profile-placeholder" style="width:64px;height:64px;border-radius:50%;background:#f1f1f1;display:flex;align-items:center;justify-content:center;color:#6b6b6b;font-weight:700;">?</div>
-                        <?php endif; ?>
-                    </div>
-                    <form method="post" enctype="multipart/form-data">
-                        <label for="owner_picture">Change profile photo</label>
-                        <input type="file" name="owner_picture" id="owner_picture" accept="image/*">
-                        <button type="submit">Upload</button>
-                    </form>
-                </div>
-                <?php endif; ?>
-
                 <div class="acct-tab" id="acct-tab">
                     <div class="acct-tabs">
                         <label class="status-option acct-tab-button">
                             <input type="radio" name="acct-stat" id="acct-info-radio" value="Account Information" checked>
-                            <span>Account Information</span>
-                        </label>
-                        <label class="status-option acct-tab-button">
-                            <input type="radio" name="acct-stat" id="acct-tran-radio" value="Account Transaction">
-                            <span>Account Transaction</span>
-                        </label>
-                        <label class="status-option acct-tab-button">
-                            <input type="radio" name="acct-stat" id="acct-book-radio" value="Bookmark">
-                            <span>Bookmarks</span>
+                            <span>LD Head Information</span>
                         </label>
                     </div>
                 </div>
@@ -119,15 +80,8 @@ if(isset($_SESSION["user_id"])){
                         <div class="field-group">
                             <label>Full Name</label>
                             <div class="field-row">
-                                <input type="text" name="lname" placeholder="Last Name" required value="<?= htmlspecialchars($user->lname) ?>">
-                                <input type="text" name="fname" placeholder="First Name" required value="<?= htmlspecialchars($user->fname) ?>">
-                                <input type="text" name="mname" id="mname" placeholder="Middle Name">
-                            </div>
-                        </div>
-                        <div class="field-group">
-                            <label>Age</label>
-                            <div class="field-row">
-                                <input type="number" name="age" id="age" placeholder="Age" min="1" value="<?= htmlspecialchars($user->age) ?>">
+                                <input type="text" name="lname" placeholder="Last Name" required value="<?= htmlspecialchars($user->last_name) ?>">
+                                <input type="text" name="fname" placeholder="First Name" required value="<?= htmlspecialchars($user->first_name) ?>">
                             </div>
                         </div>
                         <div class="field-group">
@@ -137,103 +91,15 @@ if(isset($_SESSION["user_id"])){
                             </div>
                         </div>
                         <div class="field-group">
-                            <label for="contact_number">Contact Number</label>
-                            <div class="field-row">
-                                <input type="tel" name="contactnumber" id="contact_number" placeholder="Contact Number" maxlength="11">
-                            </div>
-                        </div>
-                        <div class="field-group">
-                            <label for="username">Email</label>
-                            <div class="field-row">
-                                <input type="email" name="email" id="username" placeholder="Email" value="<?= htmlspecialchars($user->email) ?>">
-                            </div>
-                        </div>
-                        <div class="field-group">
-                            <label for="password">Change Password</label>
-                            <div class="field-row">
-                                <input type="password" name="password" id="password" placeholder="Password">
-                            </div>
-                        </div>
-                        <div class="field-group">
                             <label for="password">User ID</label>
                             <div class="field-row">
-                                <label><?= htmlspecialchars($user->user_uid) ?></label>
+                                <label><?= htmlspecialchars($user->uid) ?></label>
                             </div>
                         </div>
                     </div>
                     <?php endif; ?>
-                    <div class="acct-panel hidden" id="acct-book-content">
-                        <div class="transaction-summary">
-                            <h2>Bookmarks</h2>
-                        </div>
-                        <div class="transaction-card">
-                            
-                            <?php if($acc_book && count($acc_book) > 0): ?>
-                                
-                                <?php foreach ($acc_book as $book): ?> 
-                                <div class="transaction-card__header">
-                                    <span><?= $book->house_status ?></span>
-                                </div>
-                                <div class="transaction-card__body">
-                                    <p class="transaction-card__message">Block: <?= $book->blocknumber ?></p>
-                                    <p class="transaction-card__message">Lot: <?= $book->lotnumber ?></p>
-                                </div>
-                                <?php endforeach; ?>
-                                
-                            <?php else: ?>
-                                
-                                <div class="transaction-card__body">
-                                    <p class="transaction-card__message">You haven't bookmarked any properties yet.</p>
-                                </div>
-                            <?php endif; ?>
-                            
-                        </div>
-                    </div>
-                    <div class="acct-panel hidden" id="acct-tran-content">
-                        <div class="transaction-summary">
-                            <h2>Account Transactions</h2>
-                        </div>
-                        <div class="transaction-card">
-                            <div class="transaction-card__header">
-                                <span>Cell Leader</span>
-                                <span>Network Leader</span>
-                                <span>LD #</span>
-                                <span>Status</span>
-                            </div>
-                            <?php if ((($acc_rent && count($acc_rent) > 0) || ($acc_sale && count($acc_sale) > 0))): ?>
-                                <?php if ($acc_rent && count($acc_rent) > 0): ?>
-                                    <?php foreach ($acc_rent as $rent): ?>
-                                        <div class="transaction-card__row">
-                                            <span class="transaction-card__value"><?= htmlspecialchars($rent->id) ?></span>
-                                            <span class="transaction-card__value"><?= htmlspecialchars($rent->blocknumber) ?></span>
-                                            <span class="transaction-card__value"><?= htmlspecialchars($rent->lotnumber) ?></span>
-                                            <span class="transaction-card__value"><?= htmlspecialchars($rent->house_status) ?></span>
-                                            <span class="transaction-card__value"><?= htmlspecialchars(number_format($rent->rentprice, 2)) ?></span>
-                                            <span class="transaction-card__value"><?= htmlspecialchars(number_format($rent->downpayment, 2)) ?></span>
-                                            <span class="transaction-card__actions">—</span>
-                                        </div>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                                <?php if ($acc_sale && count($acc_sale) > 0): ?>
-                                    <?php foreach ($acc_sale as $sale): ?>
-                                        <div class="transaction-card__row">
-                                            <span class="transaction-card__value"><?= htmlspecialchars($sale->id) ?></span>
-                                            <span class="transaction-card__value"><?= htmlspecialchars($sale->blocknumber) ?></span>
-                                            <span class="transaction-card__value"><?= htmlspecialchars($sale->lotnumber) ?></span>
-                                            <span class="transaction-card__value"><?= htmlspecialchars($sale->house_status) ?></span>
-                                            <span class="transaction-card__value"><?= htmlspecialchars(number_format($sale->houseprice, 2)) ?></span>
-                                            <span class="transaction-card__value">—</span>
-                                            <span class="transaction-card__actions">—</span>
-                                        </div>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            <?php else: ?>
-                                <div class="transaction-card__body">
-                                    <p class="transaction-card__message">Your account is active, and all updates will appear here once available.</p>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
+                   
+                    
                     
                     
                     

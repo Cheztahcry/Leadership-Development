@@ -28,13 +28,13 @@ function changeInfo() {
     const checkedRadio = document.querySelector('input[name="acct-stat"]:checked');
     updateActiveTab();
 
-    if (checkedRadio && checkedRadio.value === "Account Information") {
+    if (checkedRadio && checkedRadio.value === "Student Information") {
         acct_info.style.display = "block";
         acct_tran.style.display = "none";
         acct_book.style.display = "none";
         save_button.style.display = button_stat ? 'inline-flex' : 'none';
         setReadOnlyMode(!button_stat);
-    } else if (checkedRadio && checkedRadio.value === "Account Transaction") {
+    } else if (checkedRadio && checkedRadio.value === "LD Information") {
         acct_info.style.display = "none";
         acct_book.style.display = "none";
         acct_tran.style.display = "block";

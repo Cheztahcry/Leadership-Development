@@ -1,24 +1,15 @@
 <?php
     require_once 'Database.php';
     class OwnerInfo extends Database {
-        private string $tbl_name = "tbl_ownerinfo";
         private array $info_list;
         public function __construct() {
         parent::__construct();
     }
-        public function owner_table(array $create_info){
-            
-            $this->create_table($this->tbl_name, $create_info);
-        }
-        public function user_token(array $create_token){
-            
-            $this->create_table("tbl_usertoken", $create_token);
-        }
         public function insert_owner_info(array $insert_info){
-            $this->insert_table($this->tbl_name, $insert_info);
+            $this->insert_table($this->query_config['tables']['account'], $insert_info);
         }
         public function show_ownerinfo($id) {
-            $sql = "SELECT * FROM `{$this->tbl_name}` WHERE id = ?";
+            $sql = "SELECT * FROM `{$this->query_config['tables']['account']}` WHERE id = ? LIMIT 1";
             $stmt = $this->pdo->prepare($sql);          
             $stmt->execute([$id]);
             $user = $stmt->fetch(PDO::FETCH_OBJ);
@@ -34,13 +25,13 @@
                 $params[":$col"] = $val;
             }
             $params[':id'] = $id;
-            $sql = "UPDATE `{$this->tbl_name}` SET " . implode(', ', $sets) . " WHERE `id` = :id";
+            $sql = "UPDATE `{$this->query_config['tables']['accounts']}` SET " . implode(', ', $sets) . " WHERE `id` = :id";
             $stmt = $this->pdo->prepare($sql);
             return $stmt->execute($params);
         }
         public function duplicate_email($email){
             $sql = "SELECT 1 
-            FROM `{$this->query_config['tables']['owner']}` 
+            FROM `{$this->query_config['tables']['students']}` 
             WHERE email = :email
             LIMIT 1";
             $stmt = $this->pdo->prepare($sql);
@@ -65,8 +56,6 @@
     
     $lname = trim(($_POST['lname'] ?? null));
     $fname = trim(($_POST['fname'] ?? null));
-    $gender = trim(($_POST['gender'] ?? null));
-    $age = trim(($_POST['age'] ?? null));
     $email = trim(($_POST['email'] ?? null));
     $password = trim(($_POST['password'] ?? null));
     $confirm_password = trim(($_POST['confirm_password'] ?? null));
@@ -78,30 +67,10 @@
     $expected_fields = [
     'fname'            => 'First name is required.',
     'lname'            => 'Last name is required.',
-    'age'              => 'Age is required.',
-    'gender'           => 'Gender is required.',
     'email'            => 'Email is required.',
     'password'         => 'Password is required.',
     'confirm_password' => 'Please confirm your password.'
     ];
-    $user_info = [
-       'id' => 'INT AUTO_INCREMENT PRIMARY KEY',
-       'user_uid' => 'VARCHAR (255) NOT NULL',
-       'lname' => 'VARCHAR(50) NOT NULL',
-       'fname' => 'VARCHAR(50) NOT NULL',
-       'age' => 'INT NOT NULL',
-       'gender' => 'VARCHAR(20) NOT NULL',
-       'email' => 'VARCHAR(50) NOT NULL UNIQUE',
-        'password_hash' => 'VARCHAR(255) NOT NULL ',
-        'picture' => 'VARCHAR(255) NULL',
-        ];
-    $token_info = [
-       'id' => 'INT AUTO_INCREMENT PRIMARY KEY',
-       'user_id' => 'INT NOT NULL',
-       'token_hash' => 'VARCHAR(255) NOT NULL',
-       'expiry' => 'DATETIME NOT NULL',
-       'FOREIGN KEY'   => '(user_id) REFERENCES tbl_ownerinfo(id) ON DELETE CASCADE'
-        ];
     $errors = [];
     foreach ($expected_fields as $field => $errorMessage) {
     $value = trim($_POST[$field] ?? '');
@@ -123,18 +92,14 @@
 
     if (empty($errors)) {
         $insert_info = [ 
-                "fname" => $fname,
-                "lname" => $lname,
-                "age" => $age,
-                "gender" => $gender,
+                "first_name" => $fname,
+                "last_name" => $lname,
                 "email" => $email,
-                "password_hash" => $password_hash,
-                "user_uid" => $user_id
+                "password" => $password_hash,
+                "uid" => $user_id
 
                   ];  
         $owner = new OwnerInfo();
-        $owner->owner_table($user_info);
-        $owner->user_token($token_info);
         try {
             $owner->insert_owner_info($insert_info);
             header("Location: index.php");
