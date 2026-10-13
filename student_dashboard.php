@@ -82,6 +82,14 @@ else {
                                 <span>Status</span>
                             </div>
                         </div>
+                        <div class="transaction-card">
+                            <div class="transaction-card__row">
+                                <span class="transaction-card__value"><?= htmlspecialchars($student->netlead_fname . ' ' . $student->netlead_lname) ?></span>
+                                <span class="transaction-card__value"><?= htmlspecialchars($student->netlead_fname . ' ' . $student->netlead_lname) ?></span>
+                                <span class="transaction-card__value"><?= htmlspecialchars($student->netlead_fname . ' ' . $student->netlead_lname) ?></span>
+                                <span>Status</span>
+                            </div>
+                        </div>
                     </div>
                     
                     
