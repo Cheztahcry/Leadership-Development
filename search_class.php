@@ -16,8 +16,8 @@ class SearchResults extends Database{
         WHERE (
             students.first_name LIKE :search 
             OR students.last_name LIKE :search 
-            OR students.student_code LIKE :search
-            OR students.id LIKE :search
+            OR students.uid LIKE :search
+            OR students.gender LIKE :search
             OR students.netlead_fname LIKE :search
             OR students.netlead_lname LIKE :search 
         )
@@ -47,13 +47,15 @@ class SearchResults extends Database{
                         <tbody>
                             <?php foreach ($results as $row): ?>
                             <tr>
-                                <td><?= htmlspecialchars($row->id) ?></td>
+                                <td><?= htmlspecialchars($row->uid) ?></td>
                                 <td><?= htmlspecialchars($row->first_name) ?></td>
                                 <td><?= htmlspecialchars($row->last_name) ?></td>
                                 <td><?= htmlspecialchars($row->gender) ?></td>
                                 <td><?= htmlspecialchars($row->netlead_fname . ' ' . $row->netlead_lname) ?></td>
                                 <td class="action-cell">
-                                    <button type="button" class="action-btn inquire-btn">More Info</button>
+                                    <form action="student_dashboard.php" method="POST">
+                                    <button type="submit" name ="uid" class="action-btn inquire-btn" value = "<?= htmlspecialchars($row->uid) ?>">More Info</button>
+                                    </form>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
