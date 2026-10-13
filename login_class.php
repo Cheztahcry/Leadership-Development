@@ -7,7 +7,7 @@
         
         }
         public function delete_token(){
-            $sql = "DELETE FROM {$this->query_config['tables']['remember_token']} WHERE account_id = ?";
+            $sql = "DELETE FROM {$this->query_config['tables']['remember_tokens']} WHERE account_id = ?";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$_SESSION['account_id']]);
             $_SESSION = array();
