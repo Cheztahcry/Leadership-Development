@@ -1,4 +1,8 @@
 <?php
+date_default_timezone_set('Asia/Manila');
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
+ini_set('error_log', __DIR__ . '/error_logs/index_handler_errors.txt');
 include_once __DIR__ .  '/ld_head_info_class.php';
 include_once __DIR__ . '/login_class.php';
 session_start();
@@ -31,7 +35,8 @@ class Index{
             $ini_cookie = $this->user_cookies();
             $ini_id = $this->user_id();
         }catch (PDOException $e) {
-            echo "Database error: " . $e->getMessage();
+            error_log("Database: " . $e->getMessage());
+            die("Something went wrong. Please check back later.");
         }
         return $ini_id;
 

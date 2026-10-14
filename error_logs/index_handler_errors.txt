@@ -1,0 +1,13 @@
+[14-Oct-2026 13:02:27 Europe/Berlin] Database: SQLSTATE[HY000]: General error: 1 no such column: token
+[14-Oct-2026 13:16:57 Europe/Berlin] Database: SQLSTATE[HY000]: General error: 1 no such column: token
+[14-Oct-2026 13:17:17 Europe/Berlin] Database: SQLSTATE[HY000]: General error: 1 no such column: token
+[14-Oct-2026 13:17:18 Europe/Berlin] Database: SQLSTATE[HY000]: General error: 1 no such column: token
+[14-Oct-2026 13:17:18 Europe/Berlin] Database: SQLSTATE[HY000]: General error: 1 no such column: token
+[14-Oct-2026 13:17:18 Europe/Berlin] Database: SQLSTATE[HY000]: General error: 1 no such column: token
+[14-Oct-2026 13:23:07 Europe/Berlin] PHP Warning:  Attempt to read property "validator_hash" on int in C:\xampp\htdocs\solwin\login_class.php on line 24
+[14-Oct-2026 13:23:11 Europe/Berlin] PHP Warning:  Attempt to read property "validator_hash" on int in C:\xampp\htdocs\solwin\login_class.php on line 24
+[14-Oct-2026 19:24:31 Asia/Manila] PHP Warning:  Attempt to read property "validator_hash" on int in C:\xampp\htdocs\solwin\login_class.php on line 24
+[14-Oct-2026 19:25:52 Asia/Manila] PHP Warning:  Attempt to read property "validator_hash" on int in C:\xampp\htdocs\solwin\login_class.php on line 24
+[14-Oct-2026 19:39:22 Asia/Manila] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\solwin\login_class.php on line 23
+[14-Oct-2026 19:40:16 Asia/Manila] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\solwin\login_class.php on line 23
+[14-Oct-2026 19:42:31 Asia/Manila] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\solwin\login_class.php on line 23

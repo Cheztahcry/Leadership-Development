@@ -45,6 +45,14 @@
                     </div>
                 </div>
                 <div class="field-group">
+                    <label>Cell Leader</label>
+                    <div class="field-row">
+                        <input type="text" name="cell_leader_lname" placeholder="Last Name" required>
+                        <input type="text" name="cell_leader_fname" placeholder="First Name" required>
+                        </label>
+                    </div>
+                </div>
+                <div class="field-group">
                     <label>Current LD #</label>
                     <div class="field-row">
                         <label>

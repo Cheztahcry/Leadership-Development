@@ -14,19 +14,22 @@
             session_destroy();
         }
         public function fetch_token($selector, $validator){
-            $sql = "SELECT account_id, token FROM {$this->query_config['tables']['remember_tokens']} WHERE selector = :selector";
+            $sql = "SELECT account_id FROM {$this->query_config['tables']['remember_tokens']} WHERE selector = :selector";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([
                 'selector' => $selector]);
             $saved_tokens = $stmt->fetch(PDO::FETCH_OBJ);
 
-            foreach ($saved_tokens as $row) {
+            if($saved_tokens){
+                foreach ($saved_tokens as $row) {
                 if (password_verify($validator, $row->validator_hash)) {
                     session_regenerate_id(true);
                     $_SESSION['account_id'] = $row->account_id;
                     return true; 
                 }
             }
+            }
+            
             return false;
         }
         

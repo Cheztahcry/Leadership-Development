@@ -13,8 +13,8 @@
             try {
             $this->pdo->beginTransaction();
             $stmtStudent = $this->pdo->prepare("
-                INSERT INTO `{$this->query_config['tables']['students']}` (uid, first_name, last_name, gender, netlead_fname, netlead_lname)
-                VALUES (:uid, :first_name, :last_name, :gender, :netlead_fname, :netlead_lname)
+                INSERT INTO `{$this->query_config['tables']['students']}` (uid, first_name, last_name, gender, netlead_fname, netlead_lname, celllead_fname, celllead_lname)
+                VALUES (:uid, :first_name, :last_name, :gender, :netlead_fname, :netlead_lname, :celllead_fname, :celllead_lname)
             ");
             $stmtStudent->execute([
                 'uid' => $insert_info["uid"],
@@ -23,6 +23,8 @@
                 'gender'     => $insert_info["gender"],
                 'netlead_fname' => $insert_info["netlead_fname"],
                 'netlead_lname' => $insert_info["netlead_lname"],
+                'celllead_fname' => $insert_info["celllead_fname"],
+                'celllead_lname' => $insert_info["celllead_lname"]
             ]);
             $stmtAttendance = $this->pdo->prepare("
                 INSERT INTO `{$this->query_config['tables']['students_dashboard']}` (uid, is_active, is_completer, is_baptism)
@@ -102,6 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         "gender"       => $gender,
         "netlead_fname" => $network_leader_fname,
         "netlead_lname" => $network_leader_lname,
+        "celllead_fname" => $network_leader_fname,
+        "celllead_lname" => $network_leader_lname,
         "uid" => $user_id
     ];
 
