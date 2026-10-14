@@ -93,8 +93,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $lname  = trim($_POST['lname'] ?? '');
     $fname  = trim($_POST['fname'] ?? '');
     $gender = $_POST['gender'] ?? null;
-    $network_leader_fname = $_POST['network_leader_fname'] ?? null;
-    $network_leader_lname = $_POST['network_leader_lname'] ?? null;
+    $network_leader_fname = trim($_POST['network_leader_fname'] ?? null);
+    $network_leader_lname = trim( $_POST['network_leader_lname'] ?? null);
+    $cell_leader_fname = trim($_POST['cell_leader_fname'] ?? null);
+    $cell_leader_lname = trim($_POST['cell_leader_lname'] ?? null);
     $student = new StudentInfo();
     $user_id = $student->generate_user_id();
 
@@ -104,8 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         "gender"       => $gender,
         "netlead_fname" => $network_leader_fname,
         "netlead_lname" => $network_leader_lname,
-        "celllead_fname" => $network_leader_fname,
-        "celllead_lname" => $network_leader_lname,
+        "celllead_fname" => $cell_leader_fname,
+        "celllead_lname" => $cell_leader_lname,
         "uid" => $user_id
     ];
 
