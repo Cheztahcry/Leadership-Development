@@ -1,14 +1,3 @@
-<?php
-require_once __DIR__ . '/index_handler.php';
-include_once __DIR__ . '/students_info_class.php';
-$index_handler = new Index();
-$users_inst = $index_handler -> ini_index();
-
-$student_info = new StudentInfo();
-$students = $student_info->show_students();
-
-
-?>
 <DOCTYPE html>
 <html lang="en">
 <head>

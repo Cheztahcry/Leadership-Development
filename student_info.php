@@ -15,7 +15,7 @@
                 </nav>
             </div>
             <h1>Student Information</h1>
-            <form action="students_info_class.php" method="post" id="owner-enrollment">
+            <form action="submit.php" method="post" id="owner-enrollment" name="StudentInfo">
                 <div class="field-group">
                     <label>Full Name</label>
                     <div class="field-row">
@@ -67,6 +67,7 @@
                         <label>
                             <input type="radio" name="ld" value="LD4"> LD # 4
                         </label>
+                        <input type="hidden" name="action" value="StudentInfo">
                     </div>
 
                 </div>

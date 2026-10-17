@@ -1,0 +1,9 @@
+[15-Oct-2026 20:28:28 Asia/Manila] PHP Fatal error:  Uncaught Error: Class "Handlers\StudentInfoHandler" not found in C:\xampp\htdocs\solwin\submit.php:12
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\solwin\submit.php on line 12
+[15-Oct-2026 20:33:51 Asia/Manila] PHP Fatal error:  Uncaught Error: Class "Handlers\StudentInfoHandler" not found in C:\xampp\htdocs\solwin\submit.php:13
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\solwin\submit.php on line 13
+x

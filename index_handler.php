@@ -1,11 +1,12 @@
 <?php
+namespace Handlers;
 date_default_timezone_set('Asia/Manila');
-ini_set('display_errors', '0');
-ini_set('log_errors', '1');
-ini_set('error_log', __DIR__ . '/error_logs/index_handler_errors.txt');
-include_once __DIR__ .  '/ld_head_info_class.php';
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/error_logs/index_handler.txt');
 include_once __DIR__ . '/login_class.php';
 session_start();
+use Services\StudentInfo;
 class Index{
     private function user_cookies(){
         if (!isset($_SESSION['account_id']) && isset($_COOKIE['remember_token'])) {

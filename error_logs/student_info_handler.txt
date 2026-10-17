@@ -1,0 +1,26 @@
+[18-Oct-2026 00:32:07 Asia/Manila] PHP Warning:  include_once(C:\xampp\htdocs\solwin\classes\handlers/login_class.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\solwin\classes\handlers\StudentInfoHandler.php on line 7
+[18-Oct-2026 00:32:07 Asia/Manila] PHP Warning:  include_once(): Failed opening 'C:\xampp\htdocs\solwin\classes\handlers/login_class.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\solwin\classes\handlers\StudentInfoHandler.php on line 7
+[18-Oct-2026 00:33:48 Asia/Manila] PHP Fatal error:  Uncaught Error: Call to private method Handlers\StudentInfoHandler::info_insert() from global scope in C:\xampp\htdocs\solwin\submit.php:17
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\solwin\submit.php on line 17
+[18-Oct-2026 00:34:32 Asia/Manila] PHP Fatal error:  Uncaught Error: Call to protected method Handlers\StudentInfoHandler::info_insert() from global scope in C:\xampp\htdocs\solwin\submit.php:17
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\solwin\submit.php on line 17
+[18-Oct-2026 00:42:18 Asia/Manila] PHP Fatal error:  Uncaught Error: Class "Services\Database" not found in C:\xampp\htdocs\solwin\classes\services\StudentInfo.php:4
+Stack trace:
+#0 C:\xampp\htdocs\solwin\vendor\composer\ClassLoader.php(576): include()
+#1 C:\xampp\htdocs\solwin\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\solwin\classes\handlers\StudentInfoHandler.php(19): Composer\Autoload\ClassLoader->loadClass('Services\\Studen...')
+#3 C:\xampp\htdocs\solwin\submit.php(17): Handlers\StudentInfoHandler->info_insert(Array)
+#4 {main}
+  thrown in C:\xampp\htdocs\solwin\classes\services\StudentInfo.php on line 4
+[18-Oct-2026 00:44:58 Asia/Manila] PHP Fatal error:  Uncaught Error: Class "Services\Database" not found in C:\xampp\htdocs\solwin\classes\services\StudentInfo.php:4
+Stack trace:
+#0 C:\xampp\htdocs\solwin\vendor\composer\ClassLoader.php(576): include()
+#1 C:\xampp\htdocs\solwin\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\solwin\classes\handlers\StudentInfoHandler.php(19): Composer\Autoload\ClassLoader->loadClass('Services\\Studen...')
+#3 C:\xampp\htdocs\solwin\submit.php(17): Handlers\StudentInfoHandler->info_insert(Array)
+#4 {main}
+  thrown in C:\xampp\htdocs\solwin\classes\services\StudentInfo.php on line 4

@@ -1,0 +1,4 @@
+[15-Oct-2026 20:25:19 Asia/Manila] PHP Fatal error:  Uncaught Error: Class "Index" not found in C:\xampp\htdocs\solwin\index.php:4
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\solwin\index.php on line 4
